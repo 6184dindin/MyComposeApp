@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MyComposeApp</string>
+    <string name="test_text">Cuộc trò chuyện chỉ có một tin nhắn cho cảm giác hơi cô đơn, vì vậy hãy thay đổi cuộc trò chuyện của bạn để có nhiều tin nhắn hơn. </string>
+</resources>
