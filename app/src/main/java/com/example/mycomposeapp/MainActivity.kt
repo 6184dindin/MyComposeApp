@@ -1,5 +1,6 @@
 package com.example.mycomposeapp
 
+import android.content.Intent
 import android.graphics.drawable.Icon
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -39,6 +41,7 @@ import androidx.compose.runtime.internal.enableLiveLiterals
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -70,9 +73,21 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                        Button(onClick = {
+                            gotoHomeActivity()
+                        }) {
+                            Text(text = "Button go to home activity")
+                        }
+                    }
                 }
             }
         }
+    }
+
+    private fun gotoHomeActivity() {
+        // start home activity
+        startActivity(Intent(this, HomeActivity::class.java))
     }
 }
 
