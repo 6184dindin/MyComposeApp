@@ -9,8 +9,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-const val CATEGORY_SCREEN_ROUTE = "category_screen_route"
-fun getOpenCategoryScreenRoute() = CATEGORY_SCREEN_ROUTE
 
 @Composable
 fun CategoryScreen(openProductDetail: (String) -> Unit) {

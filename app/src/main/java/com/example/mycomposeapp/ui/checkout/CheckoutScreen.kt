@@ -7,14 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-const val CHECKOUT_SCREEN_ROUTE = "checkout/{cartId}/{customerId}"
-const val ARG_CART_ID = "cartId"
-const val ARG_CUSTOMER_ID = "customerId"
-
-fun getCheckoutRoute(cartId: String, customerId: String): String {
-    return "checkout/$cartId/$customerId"
-}
-
 @Composable
 fun CheckoutScreen(
     cartId: String, customerId: String,

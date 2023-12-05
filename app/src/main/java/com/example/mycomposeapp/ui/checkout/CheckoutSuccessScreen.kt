@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-const val CHECKOUT_SUCCESS_SCREEN_ROUTE = "checkout_success"
 
 @Composable
 fun CheckoutSuccessScreen(

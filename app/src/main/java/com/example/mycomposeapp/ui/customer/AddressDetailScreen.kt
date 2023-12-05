@@ -16,13 +16,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-const val ADDRESS_DETAIL_SCREEN_ROUTE = "addressDetail?addressId={addressId}"
-const val ARG_ADDRESS_ID = "addressId"
-
-fun getAddressDetailRoute(addressId: String?): String {
-    return if (addressId != null) "addressDetail?addressId=$addressId" else "addressDetail"
-}
-
 @Composable
 fun AddressDetailScreen(addressId: String?, saveAddressAndBack: (String?) -> Unit) {
 

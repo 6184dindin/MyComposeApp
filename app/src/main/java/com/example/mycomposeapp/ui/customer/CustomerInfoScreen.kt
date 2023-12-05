@@ -7,8 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-const val CUSTOMER_INFO_SCREEN_ROUTE = "customerInfo"
-
 @Composable
 fun CustomerInfoScreen(onClickBack: () -> Unit) {
     Column(

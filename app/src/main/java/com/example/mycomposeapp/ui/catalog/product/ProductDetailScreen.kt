@@ -7,16 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-const val PRODUCT_DETAIL_SCREEN_ROUTE = "product?productId={productId}"
-const val ARG_PRODUCT_ID = "productId"
-
-fun getProductDetailRoute(productId: String?): String {
-    return if (productId != null)
-        "product?productId=$productId"
-    else
-        "product"
-}
-
 @Composable
 fun ProductDetailScreen(productId: String, checkout: (String, String) -> Unit) {
 

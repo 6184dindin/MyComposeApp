@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
@@ -64,9 +63,7 @@ object AddressNavigation {
 
     fun createRoute(addresses: Address): String {
         val encoded = Uri.encode(addresses.toString())
-        val route = "addressBook?$addressArg=$encoded"
-        Log.e("frank", "route $route")
-        return route
+        return "addressBook?$addressArg=$encoded"
     }
 
     fun fromNav(navBackStackEntry: NavBackStackEntry): Address? {

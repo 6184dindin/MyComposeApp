@@ -14,10 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mycomposeapp.base.GetResultOneTime
-
-const val CUSTOMER_ROUTE = "customer"
-const val MY_ACCOUNT_SCREEN_ROUTE = "my_account_screen_route"
-const val ARG_NEW_ADDRESS_ID = "new_address_id"
+import com.example.mycomposeapp.ui.ArgumentKeys
 
 
 @Composable
@@ -26,7 +23,7 @@ fun MyAccountScreen(navController: NavController, openAddressScreen: (String?) -
         mutableStateOf("")
     }
 
-    navController.GetResultOneTime<String>(ARG_NEW_ADDRESS_ID) {
+    navController.GetResultOneTime<String>(ArgumentKeys.NEW_ADDRESS_ID) {
         addressId = it ?: return@GetResultOneTime
     }
 
