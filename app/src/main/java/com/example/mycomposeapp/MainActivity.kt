@@ -3,14 +3,27 @@ package com.example.mycomposeapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.mycomposeapp.screen.Screen
+import com.example.mycomposeapp.screen.ScreenA
+import com.example.mycomposeapp.screen.ScreenB
+import com.example.mycomposeapp.screen.ScreenC
 import com.example.mycomposeapp.ui.catalog.category.CATEGORY_SCREEN_ROUTE
 import com.example.mycomposeapp.ui.catalog.category.CategoryScreen
 import com.example.mycomposeapp.ui.catalog.category.getOpenCategoryScreenRoute
@@ -42,29 +55,67 @@ import com.example.mycomposeapp.ui.customer.getAddressDetailRoute
 import com.example.mycomposeapp.ui.home.HOME_SCREEN_ROUTE
 import com.example.mycomposeapp.ui.home.HomeScreen
 import com.example.mycomposeapp.ui.theme.MyComposeAppTheme
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-//            MyComposeAppTheme {
-//                // A surface container using the 'background' color from the theme
-//                Surface(
-//                    modifier = Modifier.fillMaxSize(),
-//                    color = MaterialTheme.colorScheme.background
-//                ) {
-//                }
-//            }
-            MainApp()
+            val navController = rememberNavController()
+            MyNavGraph(navController)
+        }
+    }
+}
+
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+private fun FeatureThatRequiresCameraPermission() {
+    // Camera permission state
+    val cameraPermissionState = rememberPermissionState(
+        android.Manifest.permission.CAMERA
+    )
+    if (cameraPermissionState.status.isGranted) {
+        Text("Camera permission Granted")
+    } else {
+        Column {
+            val textToShow = if (cameraPermissionState.status.shouldShowRationale) {
+                // If the user has denied the permission but the rationale can be shown, then gently explain
+                // why the app requires this permission
+                "The camera is important for this app. Please grant the permission."
+            } else {
+                // If it's the first time the user lands on this feature, or the user doesn't want to be asked again
+                // for this permission, explain that the permission is required
+                "Camera permission required for this feature to be available. " + "Please grant the permission"
+            }
+            Text(textToShow)
+            Button(onClick = { cameraPermissionState.launchPermissionRequest() }) {
+                Text("Request permission")
+            }
         }
     }
 }
 
 @Composable
-fun MainApp() {
-    val navController = rememberNavController()
+fun MyNavGraph(navController: NavHostController) {
     MyComposeAppTheme {
-        NavHost(navController = navController, startDestination = HOME_SCREEN_ROUTE) {
+        NavHost(navController = navController, startDestination = Screen.A.route) {
+            composable(route = Screen.A.route) {
+                ScreenA(navController)
+            }
+            composable(route = Screen.B.route) {
+                ScreenB(navController)
+            }
+            composable(route = Screen.C.route) {
+                val userName = it.arguments?.getString("userName")
+                ScreenC(navController, userName ?: "null")
+            }
             composable(route = HOME_SCREEN_ROUTE) {
                 HomeScreen(
                     openCategoryAction = {
@@ -180,6 +231,5 @@ fun MainApp() {
 @Composable
 fun TestPreview() {
     MyComposeAppTheme {
-//        TestScreen()
     }
 }
