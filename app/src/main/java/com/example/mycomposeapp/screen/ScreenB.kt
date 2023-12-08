@@ -27,7 +27,7 @@ fun ScreenB(navController: NavHostController = rememberNavController()) {
         Text(text = "Screen B", fontSize = 24.sp)
         Spacer(modifier = Modifier.height(24.dp))
         Button(onClick = {
-            navController.navigate(Screen.C.route)
+            navController.navigate(Screen.C.createRoute("Bob"))
         }) {
             Text("Open Screen C")
         }
