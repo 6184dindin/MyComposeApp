@@ -1,8 +1,13 @@
 package com.example.mycomposeapp
 
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
@@ -11,8 +16,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -68,8 +75,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navController = rememberNavController()
-            MyNavGraph(navController)
+//            val navController = rememberNavController()
+//            MyNavGraph(navController)
+
+            MyComposeAppTheme {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    FeatureThatRequiresCameraPermission()
+                }
+            }
         }
     }
 }
@@ -99,6 +112,40 @@ private fun FeatureThatRequiresCameraPermission() {
                 Text("Request permission")
             }
         }
+    }
+}
+@Composable
+fun ExampleRequiresCameraPermission() {
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // Permission Accepted: Do something
+            Log.e("ExampleScreen","PERMISSION GRANTED")
+
+        } else {
+            // Permission Denied: Do something
+            Log.e("ExampleScreen","PERMISSION DENIED")
+        }
+    }
+    val context = LocalContext.current
+
+    Button(
+        onClick = {
+            // Check permission
+            when (PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA) -> {
+                    // Some works that require permission
+                    Log.e("ExampleScreen","Code requires permission")
+                }
+                else -> {
+                    // Asking for permission
+                    launcher.launch(android.Manifest.permission.CAMERA)
+                }
+            }
+        }
+    ) {
+        Text(text = "Check and Request Permission")
     }
 }
 
